@@ -1,0 +1,24 @@
+﻿@model List<MulakatProje.Controllers.Analiz>
+@{
+    ViewBag.Title = "DtoSehirAnaliz";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<br />
+
+<table class="table table-bordered">
+    <tr>
+        <th>Şehir Adı</th>
+        <th>Toplam Sepet Sayısı</th>
+        <th>Toplam Tutar ₺</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.SehirAd</td>
+            <td>@item.ToplamSepet</td>
+            <td>@item.Tutar</td>
+        </tr>
+    }
+</table>
+

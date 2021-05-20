@@ -1,0 +1,29 @@
+﻿@model List<MulakatProje.Models.Entity.Urun>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+<br />
+<h3 style="margin-left:1000px;">Ürünler</h3>
+<br />
+@foreach (var item in Model)
+{
+<form method="post">
+    <div style="width:15%;" class="col-lg-4 col-md-1 col-sm-6 wow fadeIn">
+        <div class="recipe-item text-center">
+            <a href="recipe.html">
+                <img src="@item.UrunImg" alt="bbq-pork-ribs" style="width:150px; height:150px;" />
+            </a>
+            <br />
+            <h3>@item.UrunAd</h3>
+            <h1 style="font-size:15px;">@item.UrunFiyat</h1>
+            <div class="col-12 text-center show-all">
+                <div class="category-item text-center">
+                    <a style="background-color:orange; font-size:1rem;" href="/Sepet/AddItem/@item.UrunID">Sepete Ekle</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+}

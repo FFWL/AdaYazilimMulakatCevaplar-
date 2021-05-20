@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DbMulakatModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Musteri">
+    <Key>
+      <PropertyRef Name="MusteriID" />
+    </Key>
+    <Property Name="MusteriID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Ad" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Soyad" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Sehir" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="KullaniciAdı" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Sepet" Relationship="Self.FK_Sepet_Musteri" FromRole="Musteri" ToRole="Sepet" />
+    <Property Name="MusteriImg" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Sepet">
+    <Key>
+      <PropertyRef Name="SepetID" />
+    </Key>
+    <Property Name="SepetID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MusteriID" Type="Int32" />
+    <NavigationProperty Name="Musteri" Relationship="Self.FK_Sepet_Musteri" FromRole="Sepet" ToRole="Musteri" />
+    <NavigationProperty Name="SepetUrun" Relationship="Self.FK_SepetUrun_Sepet" FromRole="Sepet" ToRole="SepetUrun" />
+  </EntityType>
+  <EntityType Name="SepetUrun">
+    <Key>
+      <PropertyRef Name="SepetUrunID" />
+    </Key>
+    <Property Name="SepetUrunID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SepetID" Type="Int32" />
+    <Property Name="Tutar" Type="Int32" />
+    <Property Name="Aciklama" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <Property Name="UrunID" Type="Int32" />
+    <NavigationProperty Name="Sepet" Relationship="Self.FK_SepetUrun_Sepet" FromRole="SepetUrun" ToRole="Sepet" />
+    <NavigationProperty Name="Urun" Relationship="Self.FK_SepetUrun_Urun" FromRole="SepetUrun" ToRole="Urun" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Urun">
+    <Key>
+      <PropertyRef Name="UrunID" />
+    </Key>
+    <Property Name="UrunID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UrunAd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="UrunFiyat" Type="Int32" />
+    <NavigationProperty Name="SepetUrun" Relationship="Self.FK_SepetUrun_Urun" FromRole="Urun" ToRole="SepetUrun" />
+    <Property Name="UrunImg" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="FK_Sepet_Musteri">
+    <End Role="Musteri" Type="Self.Musteri" Multiplicity="0..1" />
+    <End Role="Sepet" Type="Self.Sepet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Musteri">
+        <PropertyRef Name="MusteriID" />
+      </Principal>
+      <Dependent Role="Sepet">
+        <PropertyRef Name="MusteriID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SepetUrun_Sepet">
+    <End Role="Sepet" Type="Self.Sepet" Multiplicity="0..1" />
+    <End Role="SepetUrun" Type="Self.SepetUrun" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sepet">
+        <PropertyRef Name="SepetID" />
+      </Principal>
+      <Dependent Role="SepetUrun">
+        <PropertyRef Name="SepetID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SepetUrun_Urun">
+    <End Role="Urun" Type="Self.Urun" Multiplicity="0..1" />
+    <End Role="SepetUrun" Type="Self.SepetUrun" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Urun">
+        <PropertyRef Name="UrunID" />
+      </Principal>
+      <Dependent Role="SepetUrun">
+        <PropertyRef Name="UrunID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DbMulakatEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Musteri" EntityType="Self.Musteri" />
+    <EntitySet Name="Sepet" EntityType="Self.Sepet" />
+    <EntitySet Name="SepetUrun" EntityType="Self.SepetUrun" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Urun" EntityType="Self.Urun" />
+    <AssociationSet Name="FK_Sepet_Musteri" Association="Self.FK_Sepet_Musteri">
+      <End Role="Musteri" EntitySet="Musteri" />
+      <End Role="Sepet" EntitySet="Sepet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SepetUrun_Sepet" Association="Self.FK_SepetUrun_Sepet">
+      <End Role="Sepet" EntitySet="Sepet" />
+      <End Role="SepetUrun" EntitySet="SepetUrun" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SepetUrun_Urun" Association="Self.FK_SepetUrun_Urun">
+      <End Role="Urun" EntitySet="Urun" />
+      <End Role="SepetUrun" EntitySet="SepetUrun" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

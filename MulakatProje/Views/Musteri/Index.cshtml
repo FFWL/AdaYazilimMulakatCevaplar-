@@ -1,0 +1,32 @@
+﻿@model MulakatProje.Models.Entity.Musteri
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<br />
+<h2>Kullanıcı Bilgileri</h2>
+
+<div class="container">
+    <div class="row row-50 justify-content-xl-between align-items-lg-center">
+        <div class="col-lg-6 wow fadeInLeft" style="visibility: visible; animation-name: fadeInLeft;">
+            <div class="box-image">
+                <img class="box-image-position" src="@Model.MusteriImg" alt="" width="341" height="391">
+            </div>
+        </div>
+        <div class="col-lg-6 col-xl-5 wow fadeInRight" style="visibility: visible; animation-name: fadeInRight;">
+            <h3>Adınız</h3>
+            <p>@Html.Label(Model.Ad)</p>
+            <br />
+            <h3>Soyadınız</h3>
+            <h2>@Html.Label(Model.Soyad)</h2>
+            <br />
+            <h3>Şehir</h3>
+            <h2>@Html.Label(Model.Sehir)</h2>
+            <br />
+            <h3>Kullanıcı Adınız</h3>
+            <h2>@Html.Label(Model.KullaniciAdı)</h2>
+            @*<p>@Html.Label(Model.Ingridient.Where(x=>x.IngridientsID))</p>*@
+        </div>
+    </div>
+</div>
